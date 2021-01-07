@@ -1,0 +1,86 @@
+﻿@model News
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Edit</h1>
+<hr />
+<br />
+<div style="border-radius:5px;background-color:#f2f2f2;padding:40px;">
+    <div class="row">
+        <div class="col-md-10">
+            <form asp-action="Create" method="post" enctype="multipart/form-data">
+
+                <input type="hidden" asp-for="Id" />
+                <input type="hidden" asp-for="Image" />
+
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                <div class="form-group row">
+                    <div class="col-2">
+                        <label asp-for="Title" class="col-form-label"></label>
+                    </div>
+                    <div class="col-10">
+                        <input asp-for="Title" class="form-control" />
+                        <span asp-validation-for="Title" class="text-danger"></span>
+                    </div>
+
+                </div>
+
+                <div class="form-group row">
+                    <div class="col-2">
+                        <label asp-for="Description" class="col-form-label"></label>
+                    </div>
+                    <div class="col-10">
+                        <textarea asp-for="Description" class="form-control"></textarea>
+                        <span asp-validation-for="Description" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <div class="col-2">
+                        <label asp-for="Type" class="col-form-label"></label>
+                    </div>
+                    <div class="col-5">
+                        <select asp-for="Type"
+                                asp-items="Html.GetEnumSelectList<News.NewsType>()"
+                                class="form-control">
+                        </select>
+                    </div>
+                </div>
+
+
+
+                <div class="form-group row">
+                    <div class="col-2">
+                        <label asp-for="Image" class="col-form-label"></label>
+                    </div>
+                    <div class="col-10">
+                        <input asp-for="ImageUpload" class="form-control" />
+                        <span asp-validation-for="ImageUpload" class="text-danger"></span>
+                    </div>
+                </div>
+                <img src="" id="imgpreview" alt="" />
+
+                <div class="form-group row">
+                    <div class="col-6 offset-2">
+                        <partial name="_EditAndBackToListButtons" model="Model.Id" />
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts{
+    @{ await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <script>
+
+        $("#ImageUpload").change(function () {
+            readURL(this);
+        });
+    </script>
+}

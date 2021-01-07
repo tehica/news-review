@@ -1,0 +1,112 @@
+﻿@model IEnumerable<News>
+
+@{
+    ViewData["Title"] = "Index News";
+}
+
+<br />
+
+<div style="border-radius:5px;background-color:#f2f2f2;padding:40px;">
+    <div class="row">
+        <div class="col-3">
+            <h1>News List</h1>
+        </div>
+
+        <div class="col-3">
+            <p>
+                <a asp-action="Create"
+                   class="btn btn-warning text-white font-weight-bold ml-1"
+                   style="line-height: 35px; font-size: 20px">
+                    + Add News
+                </a>
+            </p>
+        </div>
+    </div>
+    <br />
+    <br />
+
+    @if (Model.Any())
+    {
+        @foreach (var item in Model)
+        {
+            <div class="border border-dark rounded col-12"
+                 style="margin-bottom:10px; margin-top:10px; padding:10px;">
+                <div class="row">
+
+                    <div class="col-md-3 col-sm-12">
+                        <img src="~/images/@item.Image" width="99%" style="border-radius:5px; border:1px solid #bbb9b9" />
+                    </div>
+
+                    <div class="col-md-9 col-sm-12">
+                        <div class="row pr-3">
+                            <div class="col-8">
+                                <label class="text-primary" style="font-size:21px; color:maroon;">
+                                    <a asp-action="Details" asp-route-id="@item.Id">@item.Title</a>
+                                </label>
+                            </div>
+                            <div class="col-4 text-right" style="color:maroon">
+                                @if (item.Type == "0")
+                                {
+                                    //nameof(NewsType.Undefine)
+                                    <h4>Undefine</h4>
+                                }
+                                @if (item.Type == "1")
+                                {
+                                    <h4>General</h4>
+                                }
+                                @if (item.Type == "2")
+                                {
+                                    <h4>Sport</h4>
+                                }
+                            </div>
+                        </div>
+                        @{
+                            string desc = item.Description.Substring(0, 200) + "...";
+                        }
+                        <div class="row col-12 text-justify d-none d-md-block">
+                            <p>@desc</p>
+                        </div>
+
+                        <div class="col-md-3 col-sm-12 offset-md-9 text-center">
+                            @*<a asp-action="Details" class="btn btn-success form-control" asp-route-id="@item.Id">Details</a>*@
+                            <div class="btn-group" role="group">
+                                <button id="btnGroupDrop1" type="button" class="btn btn-outline-dark font-weight-bold dropdown-toggle"
+                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Options
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="btnGroupDrop1">
+                                    <a class="dropdown-item" asp-action="Details"
+                                       asp-route-id="@item.Id" style="color: #5cb85c">Details</a>
+                                    <a class="dropdown-item" asp-action="Edit"
+                                       asp-route-id="@item.Id" style="color: #f0ad4e">Edit</a>
+                                    <a class="dropdown-item"
+                                       onclick="return confirm('Are you sure you want to delete?')"
+                                       asp-action="Delete" asp-route-Id="@item.Id"
+                                       style="color: #d9534f">Delete</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+    else
+    {
+        <div class="card">
+            <div class="card-header">
+                No news added yet
+            </div>
+            <div class="card-body">
+                <h5 class="card-title">
+                    Use the button below to create news
+                </h5>
+                <a class="btn btn-primary" style="width:auto"
+                   asp-controller="News" asp-action="Create">
+                    Add News
+                </a>
+            </div>
+        </div>
+    }
+</div>
+

@@ -1,0 +1,133 @@
+﻿@model News
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Create News</h1>
+<hr />
+<br />
+
+<div style="border-radius:5px;background-color:#f2f2f2;padding:40px;">
+    <div class="row">
+        <div class="col-md-10">
+            <form asp-action="Create" method="post" enctype="multipart/form-data">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+
+                <div class="form-group row">
+                    <div class="col-2">
+                        <label asp-for="Title" class="col-form-label"></label>
+                    </div>
+                    <div class="col-5">
+                        <input asp-for="Title" class="form-control" />
+                    </div>
+                    <span asp-validation-for="Title" class="text-danger"></span>
+                </div>
+
+                <div class="form-group row">
+                    <div class="col-2">
+                        <label asp-for="Type" class="col-form-label"></label>
+                    </div>
+                    <div class="col-5">
+                        <select asp-for="Type"
+                                asp-items="Html.GetEnumSelectList<News.NewsType>()"
+                                class="form-control">
+                        </select>
+                    </div>
+                </div>
+
+                @*<div class="form-group row">
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Description</span>
+                            </div>
+                            <textarea asp-for="Description" class="form-control" aria-label="With textarea"></textarea>
+                            <span asp-validation-for="Description" class="text-danger"></span>
+                        </div>
+                    </div>*@
+
+                <div class="form-group row">
+                    <div class="col-2">
+                        <label asp-for="Description" class="col-form-label"></label>
+                    </div>
+                    <div class="col-10">
+                        <textarea asp-for="Description" class="form-control" placeholder="Write something here..."></textarea>
+                        <span asp-validation-for="Description" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <div class="col-2">
+                        <label asp-for="Image" class="col-form-label"></label>
+                    </div>
+                    <div class="col-10">
+                        <input asp-for="ImageUpload" class="form-control" />
+                        <span asp-validation-for="ImageUpload" class="text-danger"></span>
+                    </div>
+                </div>
+                <img src="" id="imgpreview" alt="" />
+
+
+                <div class="form-group row">
+                    <div class="col-5 offset-2">
+                        <partial name="_CreateAndBackToListButtons" />
+                    </div>
+                </div>
+
+            </form>
+        </div>
+    </div>
+</div>
+
+@*<style>
+    .media .avatar {
+        width: 64px;
+    }
+
+    .shadow-textarea textarea.form-control::placeholder {
+        font-weight: 300;
+    }
+
+    .shadow-textarea textarea.form-control {
+        padding-left: 0.8rem;
+    }
+</style>
+<div class="media">
+    <img class="d-flex rounded-circle avatar z-depth-1-half mr-3" src="https://mdbootstrap.com/img/Photos/Avatars/avatar-5.jpg"
+         alt="Avatar">
+    <div class="media-body">
+        <h5 class="mt-0 font-weight-bold blue-text">Anna Smith</h5>
+        Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus
+        odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate
+        fringilla. Donec lacinia congue felis in faucibus.
+
+        <div class="media mt-3 shadow-textarea">
+            <img class="d-flex rounded-circle avatar z-depth-1-half mr-3" src="https://mdbootstrap.com/img/Photos/Avatars/avatar-8.jpg"
+                 alt="Generic placeholder image">
+            <div class="media-body">
+                <h5 class="mt-0 font-weight-bold blue-text">Danny Tatuum</h5>
+                <div class="form-group basic-textarea rounded-corners">
+                    <textarea class="form-control z-depth-1" id="exampleFormControlTextarea345" rows="3" placeholder="Write your comment..."></textarea>
+                </div>
+            </div>
+        </div>
+    </div>*@
+
+
+@section Scripts{
+@{ await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+
+    <script>
+        $("#ImageUpload").change(function () {
+                readURL(this);
+            });
+    </script>
+        @*<script>
+                CKEDITOR.replace("Description");
+
+                $("#ImageUpload").change(function () {
+                    readURL(this);
+                });
+            </script>*@
+}

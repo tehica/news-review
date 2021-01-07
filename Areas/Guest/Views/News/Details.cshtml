@@ -1,0 +1,196 @@
+﻿@model NewsCommentsAndUsersViewModel
+@inject Microsoft.AspNetCore.Identity.SignInManager<ApplicationUser> signInManager;
+
+@{
+    ViewData["Title"] = "Index News";
+}
+
+<div class="container">
+    <div class="jumbotron">
+        @Model.News.Title
+        <hr />
+        @switch (Model.News.Type)
+        {
+            case "1":
+                <span>
+                    <label class="font-weight-bold" style="color:maroon;">General</label>
+                </span>
+                break;
+        }
+    </div>
+
+
+    <img src="~/images/@Model.News.Image" width="99%" height="500px" style="border-radius:5px; border:1px solid #bbb9b9" />
+    <div class="jumbotron jumbotron-fluid">
+        <div class="container">
+            <h1 class="display-4">@Model.News.Title</h1>
+            <p class="lead pl-4 pr-4">@Model.News.Description</p>
+        </div>
+    </div>
+
+    <style>
+        .media .avatar {
+            width: 64px;
+        }
+
+        .shadow-textarea textarea.form-control::placeholder {
+            font-weight: 300;
+        }
+
+        .shadow-textarea textarea.form-control {
+            padding-left: 0.8rem;
+        }
+    </style>
+
+
+
+    @if (signInManager.IsSignedIn(User))
+    {
+        @if (Model.Comments.Count() > 0)
+        {
+            <p>
+                <a class="btn btn-outline-info" data-toggle="collapse"
+                   href="#multiCollapseExample1" role="button"
+                   aria-expanded="false" aria-controls="multiCollapseExample1">
+                    Comments <span class="badge badge-warning">@Model.Comments.Count()</span>
+                </a>
+            </p>
+
+            @foreach (var comment in Model.Comments)
+            {
+                <div class="row">
+                    <div class="col">
+                        <div class="collapse multi-collapse" id="multiCollapseExample1">
+                            <div class="card card-body">
+                                <div class="media">
+                                    @if (comment.ApplicationUser.Gender == "Male")
+                                    {
+                                        <img class="d-flex rounded-circle avatar z-depth-1-half mr-3" src="~/images/users/male.jpg"
+                                             alt="Avatar">
+                                    }
+                                    else if (comment.ApplicationUser.Gender == "Female")
+                                    {
+                                        <img class="d-flex rounded-circle avatar z-depth-1-half mr-3" src="~/images/users/female.png"
+                                             alt="Avatar">
+                                    }
+                                    else
+                                    {
+                                        <img class="d-flex rounded-circle avatar z-depth-1-half mr-3" src="~/images/users/unknownuser.jpg"
+                                             alt="Avatar">
+                                    }
+
+
+                                    <h5 class="mt-0 font-weight-bold blue-text">@comment.ApplicationUser.DisplayName!</h5>
+                                    <br />
+                                    <div class="mt-4">
+                                        @comment.Text
+                                    </div>
+                                    <br />
+
+                                    <!-- modal start -->
+                                    <!-- modal end-->
+                                    @if (signInManager.IsSignedIn(User) && User.IsInRole("Admin"))
+                                    {
+                                        <a class="btn btn-danger text-white ml-5"
+                                           asp-action="DeleteComment" asp-route-id="@comment.Id">
+                                            <svg width="1em" height="1em" viewBox="0 0 16 16" class="bi bi-trash" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                                <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
+                                                <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4L4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z" />
+                                            </svg>
+                                        </a>
+                                    }
+                                    @*<div class="media-body mt-2">
+            <h5 class="mt-0 font-weight-bold blue-text">@comment.ApplicationUser.DisplayName!</h5>
+            @comment.Text
+
+            <div class="media mt-3 shadow-textarea">
+                <img class="d-flex rounded-circle avatar z-depth-1-half mr-3" src="https://mdbootstrap.com/img/Photos/Avatars/avatar-8.jpg"
+                     alt="Generic placeholder image">
+                <div class="media-body">
+                    <h5 class="mt-0 font-weight-bold blue-text">@comment.ApplicationUser.DisplayName!</h5>
+                    <div class="form-group basic-textarea rounded-corners">
+                        <textarea class="form-control z-depth-1" id="exampleFormControlTextarea345" rows="3" placeholder="Write your comment..."></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>*@
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+
+            @*<label for="exampleFormControlTextarea6">@Model.News.Id @ViewBag.loggedInUserId</label>*@
+            <div class="card">
+                <div class="card-header display-4">
+                    Add comment
+                </div>
+                <div class="card-body">
+                    <div class="form-group shadow-textarea">
+                        <form asp-action="AddComment" method="post">
+
+                            <input type="hidden"
+                                   asp-for="@Model.Comment.ApplicationUserId"
+                                   value="@ViewBag.loggedInUserId" />
+
+                            <input type="hidden"
+                                   asp-for="@Model.Comment.NewsId"
+                                   value="@Model.News.Id" />
+
+
+                            <textarea asp-for="@Model.Comment.Text"
+                                      class="form-control z-depth-1"
+                                      id="exampleFormControlTextarea6"
+                                      rows="3"
+                                      placeholder="Write something here..."></textarea>
+
+                            <input type="submit" class="btn btn-outline-warning col-2 mt-2" value="Add" />
+                        </form>
+                        
+                    </div>
+                </div>
+            </div>
+
+        }
+        else
+        {
+            <div class="card">
+                <div class="card-header display-4">
+                    Add comment
+                </div>
+                <div class="card-body">
+                    <div class="form-group shadow-textarea">
+                        <label for="exampleFormControlTextarea6">@ViewBag.loggedInUserId</label>
+                        <textarea class="form-control z-depth-1" id="exampleFormControlTextarea6" rows="3" placeholder="Write something here..."></textarea>
+                    </div>
+                </div>
+            </div>
+        }
+    }
+
+
+</div>
+
+@*<div class="media">
+        <img class="d-flex rounded-circle avatar z-depth-1-half mr-3" src="https://mdbootstrap.com/img/Photos/Avatars/avatar-5.jpg"
+             alt="Avatar">
+        <div class="media-body">
+            <h5 class="mt-0 font-weight-bold blue-text">Anna Smith</h5>
+            Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus
+            odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate
+            fringilla. Donec lacinia congue felis in faucibus.
+
+            <div class="media mt-3 shadow-textarea">
+                <img class="d-flex rounded-circle avatar z-depth-1-half mr-3" src="https://mdbootstrap.com/img/Photos/Avatars/avatar-8.jpg"
+                     alt="Generic placeholder image">
+                <div class="media-body">
+                    <h5 class="mt-0 font-weight-bold blue-text">Danny Tatuum</h5>
+                    <div class="form-group basic-textarea rounded-corners">
+                        <textarea class="form-control z-depth-1" id="exampleFormControlTextarea345" rows="3" placeholder="Write your comment..."></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>*@
+

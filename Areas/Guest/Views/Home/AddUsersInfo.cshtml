@@ -1,0 +1,306 @@
+﻿
+@model Address
+
+@{
+    ViewData["Title"] = "Additional User Info";
+}
+
+<h1>Additional User Information</h1>
+<hr />
+
+<div class="row">
+    <div class="col-md-10">
+        <form asp-action="AddUsersInfo" method="post">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <input type="hidden" asp-for="@Model.Id" />
+            <input type="hidden" asp-for="@Model.ApplicationUserId" />
+
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-2 font-weight-bold">
+                        <label asp-for="@Model.FirstName" class="control-label"></label>
+                    </div>
+                    <div class="col-10">
+                        <input asp-for="@Model.FirstName" class="form-control" />
+                    </div>
+                </div>
+                <span asp-validation-for="@Model.FirstName" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-2 font-weight-bold">
+                        <label asp-for="@Model.LastName" class="control-label"></label>
+                    </div>
+                    <div class="col-10">
+                        <input asp-for="@Model.LastName" class="form-control" />
+                    </div>
+                </div>
+                <span asp-validation-for="@Model.LastName" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-2 font-weight-bold">
+                        <label asp-for="@Model.State" class="control-label"></label>
+                    </div>
+                    <div class="col-10">
+                        <input asp-for="@Model.State" class="form-control" />
+                    </div>
+                </div>
+                <span asp-validation-for="@Model.State" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-2 font-weight-bold">
+                        <label asp-for="@Model.City" class="control-label"></label>
+                    </div>
+                    <div class="col-10">
+                        <input asp-for="@Model.City" class="form-control" />
+                    </div>
+                </div>
+                <span asp-validation-for="@Model.City" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-2 font-weight-bold">
+                        <label asp-for="@Model.Street" class="control-label"></label>
+                    </div>
+                    <div class="col-10">
+                        <input asp-for="@Model.Street" class="form-control" />
+                    </div>
+                </div>
+                <span asp-validation-for="@Model.Street" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <div class="row">
+                    <div class="col-2 font-weight-bold">
+                        <label asp-for="@Model.ZipCode" class="control-label"></label>
+                    </div>
+                    <div class="col-10">
+                        <input asp-for="@Model.ZipCode" class="form-control" />
+                    </div>
+                </div>
+                <span asp-validation-for="@Model.ZipCode" class="text-danger"></span>
+            </div>
+
+            <div class="form-group row">
+                <div class="col-5 offset-2">
+                    <div class="row">
+                        <div class="col-6">
+                            <input type="submit" class="btn btn-info form-control" asp-route-id="@Model" value="Update" />
+                        </div>
+                        <div class="col-6">
+                            <a asp-action="Index" class="btn btn-primary form-control">Back to Home</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </form>
+    </div>
+</div>
+
+@*@if (Model.FirstName != null)
+{
+
+    <div class="row">
+        <div class="col-md-10">
+            <form asp-action="AddUsersInfo" method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                <input type="hidden" asp-for="@Model.Id" />
+                <input type="hidden" asp-for="@Model.ApplicationUserId" />
+
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-2 font-weight-bold">
+                            <label asp-for="@Model.FirstName" class="control-label"></label>
+                        </div>
+                        <div class="col-10">
+                            <input asp-for="@Model.FirstName" class="form-control" />
+                        </div>
+                    </div>
+                    <span asp-validation-for="@Model.FirstName" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-2 font-weight-bold">
+                            <label asp-for="@Model.LastName" class="control-label"></label>
+                        </div>
+                        <div class="col-10">
+                            <input asp-for="@Model.LastName" class="form-control" />
+                        </div>
+                    </div>
+                    <span asp-validation-for="@Model.LastName" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-2 font-weight-bold">
+                            <label asp-for="@Model.State" class="control-label"></label>
+                        </div>
+                        <div class="col-10">
+                            <input asp-for="@Model.State" class="form-control" />
+                        </div>
+                    </div>
+                    <span asp-validation-for="@Model.State" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-2 font-weight-bold">
+                            <label asp-for="@Model.City" class="control-label"></label>
+                        </div>
+                        <div class="col-10">
+                            <input asp-for="@Model.City" class="form-control" />
+                        </div>
+                    </div>
+                    <span asp-validation-for="@Model.City" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-2 font-weight-bold">
+                            <label asp-for="@Model.Street" class="control-label"></label>
+                        </div>
+                        <div class="col-10">
+                            <input asp-for="@Model.Street" class="form-control" />
+                        </div>
+                    </div>
+                    <span asp-validation-for="@Model.Street" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-2 font-weight-bold">
+                            <label asp-for="@Model.ZipCode" class="control-label"></label>
+                        </div>
+                        <div class="col-10">
+                            <input asp-for="@Model.ZipCode" class="form-control" />
+                        </div>
+                    </div>
+                    <span asp-validation-for="@Model.ZipCode" class="text-danger"></span>
+                </div>
+
+                <div class="form-group row">
+                    <div class="col-5 offset-2">
+                        <div class="row">
+                            <div class="col-6">
+                                <input type="submit" class="btn btn-info form-control" asp-route-id="@Model" value="Update" />
+                            </div>
+                            <div class="col-6">
+                                <a asp-action="Index" class="btn btn-primary form-control">Back to Home</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+    </div>
+}
+else
+{
+    <div class="row">
+        <div class="col-md-10">
+            <form asp-action="AddUsersInfo" method="post">
+                <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+                <input type="hidden" asp-for="@Model.Id" />
+                <input type="hidden" asp-for="@Model.ApplicationUserId" />
+
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-2 font-weight-bold">
+                            <label asp-for="@Model.FirstName" class="control-label"></label>
+                        </div>
+                        <div class="col-10">
+                            <input asp-for="@Model.FirstName" class="form-control" />
+                        </div>
+                    </div>
+                    <span asp-validation-for="@Model.FirstName" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-2 font-weight-bold">
+                            <label asp-for="@Model.LastName" class="control-label"></label>
+                        </div>
+                        <div class="col-10">
+                            <input asp-for="@Model.LastName" class="form-control" />
+                        </div>
+                    </div>
+                    <span asp-validation-for="@Model.LastName" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-2 font-weight-bold">
+                            <label asp-for="@Model.State" class="control-label"></label>
+                        </div>
+                        <div class="col-10">
+                            <input asp-for="@Model.State" class="form-control" />
+                        </div>
+                    </div>
+                    <span asp-validation-for="@Model.State" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-2 font-weight-bold">
+                            <label asp-for="@Model.City" class="control-label"></label>
+                        </div>
+                        <div class="col-10">
+                            <input asp-for="@Model.City" class="form-control" />
+                        </div>
+                    </div>
+                    <span asp-validation-for="@Model.City" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-2 font-weight-bold">
+                            <label asp-for="@Model.Street" class="control-label"></label>
+                        </div>
+                        <div class="col-10">
+                            <input asp-for="@Model.Street" class="form-control" />
+                        </div>
+                    </div>
+                    <span asp-validation-for="@Model.Street" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-2 font-weight-bold">
+                            <label asp-for="@Model.ZipCode" class="control-label"></label>
+                        </div>
+                        <div class="col-10">
+                            <input asp-for="@Model.ZipCode" class="form-control" />
+                        </div>
+                    </div>
+                    <span asp-validation-for="@Model.ZipCode" class="text-danger"></span>
+                </div>
+
+                <div class="form-group row">
+                    <div class="col-5 offset-2">
+                        <div class="row">
+                            <div class="col-6">
+                                <input type="submit" class="btn btn-info form-control" asp-route-id="@Model" value="Update" />
+                            </div>
+                            <div class="col-6">
+                                <a asp-action="Index" class="btn btn-primary form-control">Back to Home</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </form>
+        </div>
+    </div>
+}*@

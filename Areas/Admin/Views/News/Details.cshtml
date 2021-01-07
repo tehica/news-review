@@ -1,0 +1,77 @@
+﻿@model News
+
+@{
+    ViewData["Title"] = "Index News";
+}
+
+<div class="row">
+    <div class="col-3">
+        <h1>Details</h1>
+    </div>
+</div>
+<hr />
+<br />
+
+<div class="font-weight-bold" style="border-radius:5px;background-color:#f2f2f2;padding:40px;">
+
+    <div class="form-group row">
+        <div class="col-2">
+            <label asp-for="Id" class="custom-label"></label>
+        </div>
+        <div class="col-6">
+            <input asp-for="Id" readonly class="form-control" />
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <div class="col-2">
+            <label asp-for="Title" class="col-form-label"></label>
+        </div>
+        <div class="col-10">
+            <div class="border p-2">
+                @Html.Raw(Model.Title)
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <div class="col-2">
+            <label asp-for="Description" class="col-form-label"></label>
+        </div>
+        <div class="col-10">
+            <div class="border p-2">
+                @Html.Raw(Model.Description)
+            </div>
+        </div>
+    </div>
+
+
+    <div class="form-group row">
+        <div class="col-2">
+            <label asp-for="Image" class="custom-label"></label>
+        </div>
+        <div class="col-6">
+            <img src="~/images/@Model.Image" width="500" height="300" alt="#" style="border-radius:5px; border:3px solid #bbb9b9" />
+        </div>
+    </div>
+
+    @{
+        string stringEnumValue = Enum.GetName(typeof(News.NewsType), Int32.Parse(Model.Type));
+    }
+    <div class="form-group row">
+        <div class="col-2">
+            <label class="custom-label">Type</label>
+        </div>
+        <div class="col-6">
+            <input value="@stringEnumValue" readonly class="form-control" />
+        </div>
+    </div>
+
+
+    <div class="form-group row">
+        <div class="col-5 offset-2">
+            <partial name="_DetailsAndBackToListButtons" model="@Model.Id" />
+        </div>
+    </div>
+
+</div>
